@@ -7,6 +7,7 @@ import os
 import sys
 
 from dogpile.cache.region import make_region
+from pip._vendor.distlib.compat import raw_input
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base

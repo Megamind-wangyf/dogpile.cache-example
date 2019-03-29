@@ -24,20 +24,10 @@ from sqlalchemy.orm.query import Query
 
 
 class CachingQuery(Query):
-    """A Query subclass which optionally loads full results from a dogpile
-    cache region.
-
-    The CachingQuery optionally stores additional state that allows it to
-    consult a dogpile.cache cache before accessing the database, in the form of
-    a FromCache or RelationshipCache object.   Each of these objects refer to
-    the name of a :class:`dogpile.cache.Region` that's been configured and
-    stored in a lookup dictionary.  When such an object has associated itself
-    with the CachingQuery, the corresponding :class:`dogpile.cache.Region` is
-    used to locate a cached result.  If none is present, then the Query is
-    invoked normally, the results being cached.
-
-    The FromCache and RelationshipCache mapper options below represent
-    the "public" method of configuring this state upon the CachingQuery.
+    """
+    Query的子集，用于从dogpile缓存中获取结果，通过FromCache或者RelationshipCache对象，
+    每个对象都引用一个:class:`dogpile.cache.Region`的名称并且被存储在查询字典中。当使用
+    对象查询的时候，如果获取不到值，那么query正常执行，并且将结果缓存
 
     """
 
@@ -151,6 +141,9 @@ class CachingQuery(Query):
 
 
 def query_callable(regions, query_cls=CachingQuery):
+    """
+    创建session时绑定的是这个方法
+    """
     def query(*arg, **kw):
         return query_cls(regions, *arg, **kw)
 
